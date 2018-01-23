@@ -57,7 +57,7 @@ $response = curl_exec($ch);
 curl_close($ch);
 
 echo "Allowed Methods: <pre>";
-var_dump(json_decode($response, true));
+var_dump($response);
 echo "</pre>";
 }
 
