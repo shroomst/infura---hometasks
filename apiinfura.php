@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
 
   $result = json_decode($response, true);
   if (isset($result['result']))
-    echo "Баланс: ". $result['result'];
+    echo "Баланс: ". hexdec($result['result']). " wei";
   else 
     echo "Неверный кошелек";
 
