@@ -20,6 +20,12 @@ function web3init() {
         }
 }
 
+function randomInteger(min, max) {
+    var rand = min - 0.5 + Math.random() * (max - min + 1)
+    rand = Math.round(rand);
+    return rand;
+  }
+
 function getlist(){
 
     web3init();
@@ -35,16 +41,24 @@ function getlist(){
             ? document.getElementById("ContractABI").value
             : [{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}];
 
+        let key = (document.getElementById("setKey").value)
+            ? document.getElementById("setKey").value
+            : 0x7d02E99f7f9e19aC37d762c367F55E2fBcc4bbfd;
+
+        let ValueForKey = (document.getElementById("setValue").value)
+            ? document.getElementById("setValue").value
+            : randomInteger(10, 10000);  
+
         let myContractInstance = new web3.eth.contract(abi).at(tokenContractAddress);
         //var Mycontract = new web3.eth.Contract(abi, tokenContractAddress); older version compiles
 
         let account = web3.eth.defaultAccount = 0x7d02E99f7f9e19aC37d762c367F55E2fBcc4bbfd;
 
-        myContractInstance.setData('myKey', 23, {value: 0, gas: 20000}); // is not a function wtf
+        myContractInstance.setData(key, ValueForKey, {value: 0, gas: 20000}); // is not a function wtf
 
-        let result1 = myContractInstance.getData('myKey');// is not a function wtf
+        let result1 = myContractInstance.getData(key);// is not a function wtf
 
-        alert(result1);
+        document.getElementById("result").innerHTML = result1;
 
         
 
@@ -67,12 +81,14 @@ function getlist(){
 <body>
     <h1>Contract Interact</h1>
     <div>
-        <input id="ContractAddress" type="text" placeholder="Contract Ethereum Address or use default" style="width:350px">
-        <input id="ContractABI" type="text" placeholder="Contract ABI or use default" style="width:350px">     
+        <input id="ContractAddress" type="text" placeholder="Contract Ethereum Address or use default" style="width:350px"><br>
+        <input id="ContractABI" type="text" placeholder="Contract ABI or use default" style="width:350px"> <br>
+        <input id="setKey" type="text" placeholder="Key or random used" style="width:350px"><br>
+        <input id="setValue" type="text" placeholder="Value or random used" style="width:35px">      
         <button type="button" onClick="getlist();">Get List</button>
     </div>
-    <div id="coinbase"></div>
-    <div id="original"></div>
+    <div id="result" style="color:green"></div>
+    <div id="comment"></div>
     <div id="current"></div>
     <div id="error" style="color:red"></div>
 </body>
