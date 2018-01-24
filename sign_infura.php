@@ -19,7 +19,9 @@
   <body>
     <br><br><br><br>
   <form name="form1" id="mainForm" method="post" enctype="multipart/form-data" action="">
-		<input name="val" type="text" placeholder="Введите кошелек" style="width:350px">	
+		<input name="val" type="text" placeholder="Введите кошелек от" style="width:350px">	
+    <input name="val" type="text" placeholder="Введите кошелек кому" style="width:350px"> 
+    <input name="val" type="text" placeholder="Т" style="width:350px"> 
 		<input name="submit" type="submit" value="Check Balance"> 
     <input name="methods" type="submit" value="List Allowed Methods"> 
 	</form>
@@ -57,7 +59,8 @@ $response = curl_exec($ch);
 curl_close($ch);
 
 echo "Allowed Methods: <pre>";
-var_dump($response);
+$result = json_decode($response);
+var_dump($result);
 echo "</pre>";
 }
 

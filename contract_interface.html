@@ -1,0 +1,79 @@
+<!doctype>
+<html>
+
+<head>
+<script type="text/javascript" src="bignumber.min.js"></script>
+<script type="text/javascript" src="web3.min.js"></script>
+<script type="text/javascript">
+
+var Web3 = require('web3');
+var web3;
+
+function web3init() {
+     if (typeof web3 !== 'undefined') {
+          web3 = new Web3(web3.currentProvider);
+          console.log("Web 3 Detected!")
+        } else {
+          // set the provider you want from Web3.providers
+          web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/AJIkbhOE6PprIaonxYSS"));
+          console.log("Web 3 not found. Intialized.");
+        }
+}
+
+function getlist(){
+
+    web3init();
+
+    try {    
+        //web3.setProvider(new web3.providers.HttpProvider(""));
+
+        let tokenContractAddress = (document.getElementById("ContractAddress").value)
+            ? document.getElementById("ContractAddress").value
+            : 0xa6439DBB7355458bb022c4eB12ffD78D3977aC70;
+
+        let abi = (document.getElementById("ContractABI").value)
+            ? document.getElementById("ContractABI").value
+            : [{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}];
+
+        let myContractInstance = new web3.eth.contract(abi).at(tokenContractAddress);
+        //var Mycontract = new web3.eth.Contract(abi, tokenContractAddress); older version compiles
+
+        let account = web3.eth.defaultAccount = 0x7d02E99f7f9e19aC37d762c367F55E2fBcc4bbfd;
+
+        myContractInstance.setData('myKey', 23, {value: 0, gas: 20000}); // is not a function wtf
+
+        let result1 = myContractInstance.getData('myKey');// is not a function wtf
+
+        alert(result1);
+
+        
+
+        //Mycontract.getData.call({'key': account});
+        /*
+         tx = {
+          value: '0x0', 
+          from: account,
+          to: tokenContractAddress,
+          data: Mycontract.methods.getData(account).encodeABI(),  
+        }
+        */
+        } catch (err) {
+            document.getElementById("error").innerHTML = err;
+        }
+    }
+
+</script>
+</head>
+<body>
+    <h1>Contract Interact</h1>
+    <div>
+        <input id="ContractAddress" type="text" placeholder="Contract Ethereum Address or use default" style="width:350px">
+        <input id="ContractABI" type="text" placeholder="Contract ABI or use default" style="width:350px">     
+        <button type="button" onClick="getlist();">Get List</button>
+    </div>
+    <div id="coinbase"></div>
+    <div id="original"></div>
+    <div id="current"></div>
+    <div id="error" style="color:red"></div>
+</body>
+</html>
