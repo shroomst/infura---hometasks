@@ -54,11 +54,15 @@ function changevalue(){
 
         let account = web3.eth.defaultAccount = 0x7d02E99f7f9e19aC37d762c367F55E2fBcc4bbfd;
 
-        myContractInstance.setData(key, ValueForKey, {value: 0, gas: 20000}); // is not a function wtf
+        //myContractInstance.setData(key, ValueForKey, {value: 0, gas: 20000}); // is not a function wtf
 
-        let result1 = myContractInstance.getData(key);// is not a function wtf
+        //let result1 = myContractInstance.getData(key);// is not a function wtf
 
-        document.getElementById("result").innerHTML = "Loaded value: " + result1;
+        myContractInstance.methods.getData().call(tokenContractAddress, function(result1){
+            document.getElementById("result").innerHTML = "Loaded value: " + result1;
+            });
+
+        //document.getElementById("result").innerHTML = "Loaded value: " + result1;
 
         
 
