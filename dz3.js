@@ -18,7 +18,7 @@ function web3init(who) {
           console.log("Web 3 Detected!")
         } else {
           if (who == 'etherscan') 
-            web3 = new Web3(new Web3.providers.HttpProvider())
+            web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/AJIkbhOE6PprIaonxYSS"))
           else
             web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/AJIkbhOE6PprIaonxYSS"));
           var version = web3.version.api;
