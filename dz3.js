@@ -1,3 +1,10 @@
+// https://github.com/ethereum/web3.js/blob/develop/example/contract.html
+// https://ethereum.stackexchange.com/questions/22983/web3-eth-contract-is-not-a-function-when-making-contract web3 version changes
+// https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#eth-contract web3 manual
+// https://github.com/ethereum/wiki/wiki/JavaScript-API#contract-methods JS api
+
+//https://blog.infura.io/getting-started-with-infura-28e41844cc89 infura examples
+
 var Web3 = require('web3');
 var web3;
 
