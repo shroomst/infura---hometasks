@@ -14,7 +14,7 @@
 <script src="dz1.js"></script>
 <script src="dz2.js"></script>
 <script src="dz3.js"></script>
-
+<script src="dz4.js"></script>
 
 <script type="text/javascript">
 
@@ -67,6 +67,13 @@
 
     <div id="ContractEtherscanAPI" class="tabcontent" >
       <h3>Sign up for Events</h3>
+      <input id="fromBlock" type="text" placeholder="From Block or default" style="width:350px"><br/>
+      <input id="toBlock" type="text" placeholder="To Block or latest" style="width:350px"> <br/>
+      <input id="contractAddressEvent" type="text" placeholder="Contract address" style="width:350px"> <br/>
+      <input id="topicEvent" type="text" placeholder="Search for topic (optional)" style="width:350px"> <br/>
+      <button type="button" onClick="Events();">Subscribe Events</button>
+      <div id="resultEvent" style="color:green"></div>
+      <div id="commentEvent"></div>
     </div>
 
     
