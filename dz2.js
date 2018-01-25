@@ -2,7 +2,7 @@
 //https://github.com/ethereumjs/ethereumjs-tx/blob/master/examples/transactions.js
 //http://web3js.readthedocs.io/en/1.0/web3-eth-personal.html#sign
 
-var tx = require('ethereumjs-tx');
+//var tx = require('ethereumjs-tx');
 
 function sendRaw(rawTx) {
     var privateKey = new Buffer(keyTx, 'hex');
