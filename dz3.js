@@ -5,6 +5,8 @@
 
 //https://blog.infura.io/getting-started-with-infura-28e41844cc89 infura examples
 
+// get eth_call through proxy - байткод
+
 var Web3 = require('web3');
 var web3;
 

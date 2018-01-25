@@ -50,13 +50,13 @@ function signTransaction() {
 
 	//var fromTx = web3.eth.accounts.privateKeyToAccount(keyTx); //getting public key for nonce calc 
 
-	fromTx = 0x7d02E99f7f9e19aC37d762c367F55E2fBcc4bbfd;
+	fromTx = "0x7d02E99f7f9e19aC37d762c367F55E2fBcc4bbfd";
 	//console.log(fromTx);         
-
+	console.log('nonce:' + web3.eth.getTransactionCount(fromTx));
 	var nonceTx = web3.toHex(web3.eth.getTransactionCount(fromTx) + 1) ;   
 
 	var txData = {
-		'value' : web3.toHex(valueTX),
+		'value' : web3.toHex(valueTx),
 		'to': walletTx,
 		'from': fromTx,
 		'nonce': nonceTx,
