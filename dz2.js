@@ -48,8 +48,10 @@ function signTransaction() {
 	            ? document.getElementById("gasLimit").value
 	            : 300000;
 
-	var fromTx = web3.eth.accounts.privateKeyToAccount(keyTx); //getting public key for nonce calc
-	console.log(fromTx);         
+	//var fromTx = web3.eth.accounts.privateKeyToAccount(keyTx); //getting public key for nonce calc 
+
+	fromTx = 0x7d02E99f7f9e19aC37d762c367F55E2fBcc4bbfd;
+	//console.log(fromTx);         
 
 	var nonceTx = web3.toHex(web3.eth.getTransactionCount(fromTx) + 1) ;   
 
