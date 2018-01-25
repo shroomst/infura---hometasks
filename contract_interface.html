@@ -2,98 +2,75 @@
 <html>
 
 <head>
-<script type="text/javascript" src="bignumber.min.js"></script>
-<script type="text/javascript" src="web3.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/MikeMcl/bignumber.js/master/bignumber.min.js"></script>
+<script src="https://cdn.rawgit.com/ethereum/web3.js/master/dist/web3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="tabs.js"></script>
+
+<script src="dz1.js"></script>
+<script src="dz2.js"></script>
+<script src="dz3.js"></script>
+
+
 <script type="text/javascript">
 
-var Web3 = require('web3');
-var web3;
 
-function web3init() {
-     if (typeof web3 !== 'undefined') {
-          web3 = new Web3(web3.currentProvider);
-          console.log("Web 3 Detected!")
-        } else {
-          // set the provider you want from Web3.providers
-          web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/AJIkbhOE6PprIaonxYSS"));
-          console.log("Web 3 not found. Intialized.");
-        }
-}
-
-function randomInteger(min, max) {
-    var rand = min - 0.5 + Math.random() * (max - min + 1)
-    rand = Math.round(rand);
-    return rand;
-  }
-
-function changevalue(){
-
-    web3init();
-
-    try {    
-        //web3.setProvider(new web3.providers.HttpProvider(""));
-
-        let tokenContractAddress = (document.getElementById("ContractAddress").value)
-            ? document.getElementById("ContractAddress").value
-            : 0xa6439DBB7355458bb022c4eB12ffD78D3977aC70;
-
-        let abi = (document.getElementById("ContractABI").value)
-            ? document.getElementById("ContractABI").value
-            : [{"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"}];
-
-        let key = (document.getElementById("setKey").value)
-            ? document.getElementById("setKey").value
-            : 0x7d02E99f7f9e19aC37d762c367F55E2fBcc4bbfd;
-
-        let ValueForKey = (document.getElementById("setValue").value)
-            ? document.getElementById("setValue").value
-            : randomInteger(10, 10000);  
-
-        let myContractInstance = new web3.eth.contract(abi).at(tokenContractAddress);
-        //var Mycontract = new web3.eth.Contract(abi, tokenContractAddress); older version compiles
-
-        let account = web3.eth.defaultAccount = 0x7d02E99f7f9e19aC37d762c367F55E2fBcc4bbfd;
-
-        //myContractInstance.setData(key, ValueForKey, {value: 0, gas: 20000}); // is not a function wtf
-
-        //let result1 = myContractInstance.getData(key);// is not a function wtf
-
-        myContractInstance.methods.getData().call(tokenContractAddress, function(result1){
-            document.getElementById("result").innerHTML = "Loaded value: " + result1;
-            });
-
-        //document.getElementById("result").innerHTML = "Loaded value: " + result1;
-
-        
-
-        //Mycontract.getData.call({'key': account});
-        /*
-         tx = {
-          value: '0x0', 
-          from: account,
-          to: tokenContractAddress,
-          data: Mycontract.methods.getData(account).encodeABI(),  
-        }
-        */
-        } catch (err) {
-            document.getElementById("error").innerHTML = err;
-        }
-    }
 
 </script>
 </head>
 <body>
-    <h1>Contract Interact</h1>
-    <div>
-        <input id="ContractAddress" type="text" placeholder="Contract Ethereum Address or use default" style="width:350px"><br>
-        <input id="ContractABI" type="text" placeholder="Contract ABI or use default" style="width:350px"> <br>
-        <input id="setKey" type="text" placeholder="Key or use default" style="width:350px"><br>
-        <input id="setValue" type="text" placeholder="Value or use random" style="width:350px"> <br>      
-        <button type="button" onClick="changevalue();">Change Value</button>
+    <div class="tab">
+      <button class="tablinks" onclick="openTab(event, 'Balance')">Check Balance</button>
+      <button class="tablinks" onclick="openTab(event, 'Sign')">Sign Transaction</button>
+      <button class="tablinks" onclick="openTab(event, 'ContractWEB3')">Contract Interact WEB3</button>
+      <button class="tablinks" onclick="openTab(event, 'ContractEtherscanAPI')" id="defaultOpen">Contract Etherscan API</button>
     </div>
-    <div id="result" style="color:green"></div>
-    <div id="comment"></div>
-    <div id="current"></div>
+
+    <!-- Tab content -->
+    <div id="Balance" class="tabcontent">
+      <h3>Check Balance</h3>
+       <form name="form1" id="mainForm" method="post" enctype="multipart/form-data" action="">
+        <input id="walletBalance" type="text" placeholder="Enter wallet" style="width:350px">    
+        <button type="button" onClick="checkBalance();">Check Balance</button>
+        <button type="button" onClick="listMethods();">List Allowed Methods</button>
+        <div id="methodslisted" style="color:green"></div>
+       </form>
+    </div>
+
+    <div id="Sign" class="tabcontent">
+      <h3>Sign Transaction</h3>
+      <input id="privatekey" type="text" placeholder="Enter private key" style="width:350px"> <br/>
+      <input id="walletTx" type="text" placeholder="to Wallet" style="width:350px"><br/>
+      <input id="valueTx" type="text" placeholder="Value" style="width:350px"><br/>
+      <input id="gasLimit" type="text" placeholder="Gas limit (default 300'000)" style="width:350px"><br/>
+      <button type="button" onClick="signTransaction();">Sign Transaction</button>
+      <div id="signedTX" style="color:green"></div>
+    </div>
+
+    <div id="ContractWEB3" class="tabcontent">
+      <h3>Contract Interact WEB3</h3>
+      <input id="ContractAddress" type="text" placeholder="Contract Ethereum Address or use default" style="width:350px"><br/>
+        <input id="ContractABI" type="text" placeholder="Contract ABI or use default" style="width:350px"> <br/>
+        <input id="setKey" type="text" placeholder="Key or use default" style="width:350px"><br/>
+        <input id="setValue" type="text" placeholder="Value or use random" style="width:350px"> <br/>
+        <input type="radio" name="chooseMethod" value="etherscan" checked="checked">Etherscan<br> 
+        <input type="radio" name="chooseMethod" value="web3infura" >Web3Infura<br>     
+        <button type="button" onClick="changevalue();">Change Value</button>
+        <div id="result" style="color:green"></div>
+        <div id="comment"></div>
+        <div id="current"></div>
+    </div>
+
+    <div id="ContractEtherscanAPI" class="tabcontent" >
+      <h3>Sign up for Events</h3>
+    </div>
+
+    
     <div id="error" style="color:red"></div>
+<script>document.getElementById("defaultOpen").click();</script>
 </body>
 </html>
