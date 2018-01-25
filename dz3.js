@@ -36,7 +36,7 @@ function changevalue(){
 
     var tokenContractAddress = (document.getElementById("ContractAddress").value)
             ? document.getElementById("ContractAddress").value
-            : 0xa6439DBB7355458bb022c4eB12ffD78D3977aC70;
+            : "0xa6439DBB7355458bb022c4eB12ffD78D3977aC70";
 
     var abi = (document.getElementById("ContractABI").value)
             ? document.getElementById("ContractABI").value
@@ -44,12 +44,16 @@ function changevalue(){
 
     var key = (document.getElementById("setKey").value)
             ? document.getElementById("setKey").value
-            : 0x7d02E99f7f9e19aC37d762c367F55E2fBcc4bbfd;
+            : "0x7d02E99f7f9e19aC37d762c367F55E2fBcc4bbfd";
 
     var ValueForKey = (document.getElementById("setValue").value)
             ? document.getElementById("setValue").value
             : randomInteger(10, 10000);          
 
+    console.log("Contract: "+tokenContractAddress);
+    console.log("ABI: "+abi);
+    console.log("key: "+key);
+    console.log("ValueForKey: "+ValueForKey);
     //-----------------ETHERSCAN------------------
 
     if ($('input[name=chooseMethod]:checked').val() == "etherscan") {//etherscan
