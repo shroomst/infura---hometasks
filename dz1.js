@@ -57,7 +57,7 @@ function checkBalance() {
         }
         else{
             document.getElementById("error").innerHTML  = "";
-            document.getElementById("methodslisted").innerHTML = "Balance for "+ wallet+" is: " + parseInt(response['result'],16);
+            document.getElementById("methodslisted").innerHTML = "Balance for "+ wallet+" is: " + parseInt(response['result'],16) + ' wei OR '+ parseInt(response['result'],16) * 0.000000000000000001 + ' Ether';
         }
       }
     };

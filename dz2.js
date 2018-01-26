@@ -5,19 +5,24 @@
 //var tx = require('ethereumjs-tx');
 
 function sendRaw(rawTx) {
-    var privateKey = new Buffer(keyTx, 'hex');
-    var transaction = new tx(rawTx);
+	var Buffer = require('buffer/').Buffer;
+    var privateKey = new Buffer(keyTx, 'hex'); // Reference Error, Buffer is not defined. проверял в библиотеке ethereum-tx Buffer описан, вроед должно работать, но нет
+    											// в мануалах свежих вызывают Buffer.from(key.Tx,'hex') но тоже не работает.
+    var transaction = new tx(rawTx); // не совсем ясно обращение здесь new tx ИЛИ new transaction - в разных мануалах по разному описано.
     transaction.sign(privateKey);
-    //web3.eth.personal.sign(transaction, "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", "test password!").then(console.log);
+    //web3.eth.personal.sign(transaction, "0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe", "test password!").then(console.log); онлайн подпись через Web3.JS
     var serializedTx = transaction.serialize().toString('hex');
+    console.log('Serialized TX: '+serializedTx);
+    var feeCost = transaction.getUpfrontCost();
+	transaction.gas = feeCost;
+	console.log('Gas cost: '+feeCost);
     web3.eth.sendRawTransaction(
         '0x' + serializedTx, function(err, result) {
             if(err) {
-                console.log('error');
-                console.log(err);
-                throw (err);
-            } else {
-                console.log('success');
+                console.log('Error: '+err);
+                throw(err);
+;            } else {
+                console.log('Success: '+result);
                 console.log(result);
                 return result;
             }
@@ -48,21 +53,23 @@ function signTransaction() {
 	            ? document.getElementById("gasLimit").value
 	            : 300000;
 
-	//var fromTx = web3.eth.accounts.privateKeyToAccount(keyTx); //getting public key for nonce calc 
+	//var fromTx = web3.eth.accounts.privateKeyToAccount(keyTx); //getting public key for nonce calc requires node
 
 	fromTx = "0x7d02E99f7f9e19aC37d762c367F55E2fBcc4bbfd";
-	//console.log(fromTx);         
-	console.log('nonce:' + web3.eth.getTransactionCount(fromTx));
-	var nonceTx = web3.toHex(web3.eth.getTransactionCount(fromTx) + 1) ;   
+
+	console.log('From: '+ fromTx);  
+	let nonceCurrent = web3.eth.getTransactionCount(fromTx);
+	let nonceTx = web3.toHex(nonceCurrent + 1) ;   
+	console.log('Nonce:' + nonceCurrent); // schitaet verno!
 
 	var txData = {
 		'value' : web3.toHex(valueTx),
 		'to': walletTx,
 		'from': fromTx,
 		'nonce': nonceTx,
-		'chainId': 3, //ropsten
+		'chainId': 3, //EIP 155 chainId - mainnet: 1, ropsten: 3
 	    'gasPrice': web3.toHex(1000),//gas price set
-		'gas-limit': web3.toHex(gasLimit)
+		'gasLimit': web3.toHex(gasLimit)
 	}
 
 	try {

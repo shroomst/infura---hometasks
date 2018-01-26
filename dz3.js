@@ -6,6 +6,7 @@
 //https://blog.infura.io/getting-started-with-infura-28e41844cc89 infura examples
 
 // get eth_call through proxy - байткод
+// eth_call создавать транзу и подписывать
 
 var Web3 = require('web3');
 var web3;
@@ -51,7 +52,7 @@ function changevalue(){
             : randomInteger(10, 10000);          
 
     console.log("Contract: "+tokenContractAddress);
-    console.log("ABI: "+abi);
+    console.log("ABI: "+JSON.stringify(abi));
     console.log("key: "+key);
     console.log("ValueForKey: "+ValueForKey);
     //-----------------ETHERSCAN------------------
