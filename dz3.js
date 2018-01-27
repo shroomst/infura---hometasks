@@ -97,6 +97,8 @@ function changevalue(){
 
           let wallet = document.getElementById("walletBalance").value;
 
+          let dataEncoded = "0x";//tut nado bytecode obrasheniya k kontraktu
+
           let params = [["to" => tokenContractAddress, "data"=> dataEncoded], "latest"];
 
           request.open('GET', 'https://api.infura.io/v1/jsonrpc/ropsten/eth_call?params=' + encodeURIComponent(JSON.stringify(params)));
@@ -125,20 +127,20 @@ function changevalue(){
           request.send();
           
 
-          myContractInstance.methods.setData().call(key, ValueForKey, {value: 0, gas: 20000, from: account}); // Cannot read property 'eth' of undefined
+          //myContractInstance.methods.setData().call(key, ValueForKey, {value: 0, gas: 20000, from: account}); // Cannot read property 'eth' of undefined
 
           //myContractInstance.methods.setData(key, ValueForKey).call({value: 0, gas: 20000, from: account}); // Cannot read property 'eth' of undefined
 
           //myContractInstance.setData(key, ValueForKey, {value: 0, gas: 20000, from: account}); //is not a function wtf
 
-          let result1 = myContractInstance.getData(key);// this._eth.call is not a function
+          //let result1 = myContractInstance.getData(key);// this._eth.call is not a function
 
           //myContractInstance.getData(tokenContractAddress, function(result1){
           //    document.getElementById("result").innerHTML = "Loaded value: " + result1;
           //    });
 
-          document.getElementById("result").innerHTML = "Loaded value: " + result1;
-          document.getElementById("error").innerHTML = "";
+          //document.getElementById("result").innerHTML = "Loaded value: " + result1;
+          //document.getElementById("error").innerHTML = "";
 
           
 
