@@ -5,7 +5,7 @@
 //var tx = require('ethereumjs-tx');
 
 function sendRaw(rawTx) {
-	var Buffer = require('buffer/').Buffer;
+	
     var privateKey = new Buffer(keyTx, 'hex'); // Reference Error, Buffer is not defined. проверял в библиотеке ethereum-tx Buffer описан, вроед должно работать, но нет
     											// в мануалах свежих вызывают Buffer.from(key.Tx,'hex') но тоже не работает.
     var transaction = new tx(rawTx); // не совсем ясно обращение здесь new tx ИЛИ new transaction - в разных мануалах по разному описано.
@@ -19,10 +19,10 @@ function sendRaw(rawTx) {
     web3.eth.sendRawTransaction(
         '0x' + serializedTx, function(err, result) {
             if(err) {
-                console.log('Error: '+err);
+                console.log('Error: ' + err);
                 throw(err);
 ;            } else {
-                console.log('Success: '+result);
+                console.log('Success: ' + result);
                 console.log(result);
                 return result;
             }

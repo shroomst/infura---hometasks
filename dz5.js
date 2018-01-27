@@ -7,6 +7,12 @@
 
 // get eth_call through proxy - байткод
 // eth_call создавать транзу и подписывать
+// let request = new XMLHttpRequest();
+
+//    request.open('GET', 'https://api.infura.io/v1/jsonrpc/ropsten/methods');
+
+//    request.setRequestHeader('Content-Type', 'application/json');
+//    request.setRequestHeader('Accept', 'application/json');
 
 var Web3 = require('web3');
 var web3;
@@ -89,40 +95,15 @@ function changevalue(){
     else { // web3infura
       document.getElementById("comment").innerHTML = "Using Infura.";
       web3init('infura');
-      defaultAccount = "0x7d02E99f7f9e19aC37d762c367F55E2fBcc4bbfd";
+      var account = web3.eth.defaultAccount = 0x7d02E99f7f9e19aC37d762c367F55E2fBcc4bbfd;
 
       try {    
 
-          let request = new XMLHttpRequest();
+          var myContractInstance = new web3.eth.contract(abi).at(tokenContractAddress);
 
-          let wallet = document.getElementById("walletBalance").value;
+          //alert(JSON.stringify(myContractInstance));
+          //var Mycontract = new web3.eth.Contract(abi, tokenContractAddress); older version compiles
 
-          let params = [["to" => tokenContractAddress, "data"=> dataEncoded], "latest"];
-
-          request.open('GET', 'https://api.infura.io/v1/jsonrpc/ropsten/eth_call?params=' + encodeURIComponent(JSON.stringify(params)));
-
-          request.setRequestHeader('Content-Type', 'application/json');
-          request.setRequestHeader('Accept', 'application/json');
-
-          request.onreadystatechange = function () {
-            if (this.readyState === 4) {
-              console.log('Status:', this.status);
-              console.log('Headers:', this.getAllResponseHeaders());
-              console.log('Body:', this.responseText);
-              let response = JSON.parse(this.responseText);
-              console.log('Response:', response['error']);
-              if (response['error']) {
-                  document.getElementById("error").innerHTML  = "Error! "+ response['error']['message'];
-                  document.getElementById("result").innerHTML = "";
-              }
-              else{
-                  document.getElementById("error").innerHTML  = "";
-                  document.getElementById("result").innerHTML = response['result'];
-              }
-            }
-          };
-
-          request.send();
           
 
           myContractInstance.methods.setData().call(key, ValueForKey, {value: 0, gas: 20000, from: account}); // Cannot read property 'eth' of undefined
