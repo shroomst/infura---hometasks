@@ -3,7 +3,9 @@
 
 <head>
 <script type="text/javascript" src="https://cdn.rawgit.com/MikeMcl/bignumber.js/master/bignumber.min.js"></script>
-<script src="https://cdn.rawgit.com/ethereum/web3.js/master/dist/web3.min.js"></script>
+<!-- <script src="https://cdn.rawgit.com/ethereum/web3.js/master/dist/web3.min.js"></script>  version 0.2-->
+
+<script type="text/javascript" src="https://cdn.rawgit.com/ethereum/web3.js/1.0/dist/web3.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
@@ -13,11 +15,12 @@
 
 <script src="tabs.js"></script>
 
-<script src="dz1.js"></script>
+<!-- <script src="dz1.js"></script>
 <script src="dz2.js"></script>
 <script src="dz3.js"></script>
 <script src="dz4.js"></script>
-
+<script src="dz5.js"></script> !-->
+<script src="dz6.js"></script>
 <script type="text/javascript">
 
 
@@ -25,15 +28,16 @@
 </script>
 </head>
 <body>
-    <div class="tab">
+  <!--  <div class="tab">
       <button class="tablinks" onclick="openTab(event, 'Balance')">Check Balance</button>
       <button class="tablinks" onclick="openTab(event, 'Sign')">Sign Transaction</button>
       <button class="tablinks" onclick="openTab(event, 'ContractWEB3')">Contract Interact WEB3</button>
-      <button class="tablinks" onclick="openTab(event, 'ContractEtherscanAPI')" id="defaultOpen">Contract Etherscan API</button>
+      <button class="tablinks" onclick="openTab(event, 'ContractEtherscanAPI')" id="defaultOpen">Subscribe Event</button>
+      <button class="tablinks" onclick="openTab(event, 'CreateAccount')" id="defaultOpen">Create Account</button>
     </div>
 
     <!-- Tab content -->
-    <div id="Balance" class="tabcontent">
+<!--    <div id="Balance" class="tabcontent">
       <h3>Check Balance</h3>
        <form name="form1" id="mainForm" method="post" enctype="multipart/form-data" action="">
         <input id="walletBalance" type="text" placeholder="Enter wallet" style="width:350px">    
@@ -76,10 +80,22 @@
       <button type="button" onClick="Events();">Subscribe Events</button>
       <div id="resultEvent" style="color:green"></div>
       <div id="commentEvent"></div>
-    </div>
+    </div> 
+
+    <div id="CreateAccount" class="tabcontent" >-->
+      <h3>Sign up for Events</h3>
+      <input id="createPass" type="text" placeholder="Enter Password" style="width:350px">
+      <button type="button" onClick="CreateAccount();">Create Account</button><br/>
+      <input id="accountNumber" type="text" placeholder="Enter Account to lock/unlock" style="width:350px">
+      <button type="button" onClick="Unblock();">Unblock</button> 
+      <button type="button" onClick="block();">Block</button>
+      <div id="resultEventAcc" style="color:green"></div>
+      <div id="commentEvent"></div>
+      <div id="error" style="color:red"></div>
+   <!-- </div>
 
     
-    <div id="error" style="color:red"></div>
-<script>document.getElementById("defaultOpen").click();</script>
+    
+<script>document.getElementById("defaultOpen").click();</script>-->
 </body>
 </html>
